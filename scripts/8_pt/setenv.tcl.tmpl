@@ -1,0 +1,13 @@
+# DigitalPilot · PT 环境模板
+set DESIGN_NAME   "__DESIGN__"  ;#  The name of the top-level design
+
+set library_dir "/SM01/teaching/bs/digitalic/gb18_dc_lib"
+
+set ADDITIONAL_SEARCH_PATH " . \
+   ${library_dir}/ "; #  Additional search path to be added to the default search path
+
+set REPORTS_DIR "./reports"
+
+set search_path ". ./tcl $ADDITIONAL_SEARCH_PATH"
+
+set NETLIST_FILES  "../4_innovus/postlayout/__DESIGN__.v"

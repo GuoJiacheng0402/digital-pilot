@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300" role="img" aria-label="DigitalPilot flow">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/><stop offset="1" stop-color="#15233b"/>
+    </linearGradient>
+    <linearGradient id="ac" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+    <style>
+      .t { font-family:"Segoe UI",Arial,sans-serif; font-weight:600; fill:#f8fafc; }
+      .s { font-family:"SFMono-Regular",Consolas,monospace; fill:#94a3b8; }
+      .g { font-family:"SFMono-Regular",Consolas,monospace; fill:#818cf8; }
+      .box { fill:#0f1b2d; stroke:#334155; stroke-width:1.2; rx:10; }
+      .hot { fill:#101b33; stroke:url(#ac); stroke-width:1.6; }
+    </style>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="300" rx="16" fill="url(#bg)"/>
+  <text x="34" y="44" class="t" font-size="20">DigitalPilot 全流程(每阶段一条命令 · 每关一个 Gate)</text>
+
+  <!-- row 1 -->
+  <g>
+    <rect class="box" x="34"  y="70" width="130" height="58" rx="10"/>
+    <text x="48" y="94" class="t" font-size="14">0 RTL 仿真</text><text x="48" y="114" class="s" font-size="11">make run_vcs</text>
+    <rect class="box" x="196" y="70" width="130" height="58" rx="10"/>
+    <text x="210" y="94" class="t" font-size="14">1 DC 综合</text><text x="210" y="114" class="s" font-size="11">./run.sh</text>
+    <rect class="box" x="358" y="70" width="130" height="58" rx="10"/>
+    <text x="372" y="94" class="t" font-size="14">2 Formality</text><text x="372" y="114" class="s" font-size="11">./run.sh</text>
+    <rect class="box" x="520" y="70" width="130" height="58" rx="10"/>
+    <text x="534" y="94" class="t" font-size="14">3 前仿 GLS</text><text x="534" y="114" class="s" font-size="11">make run_vcs</text>
+    <rect class="box" x="682" y="70" width="150" height="58" rx="10"/>
+    <text x="696" y="94" class="t" font-size="14">4 Innovus APR</text><text x="696" y="114" class="s" font-size="11">innovus -batch · ECO</text>
+    <path d="M164 99 H194 M326 99 H356 M488 99 H518 M650 99 H680" stroke="#475569" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- row 2 -->
+  <g>
+    <rect class="hot" x="34"  y="170" width="190" height="58" rx="10"/>
+    <text x="48" y="192" class="t" font-size="14">5 DRC / LVS ★黑盒已解</text>
+    <text x="48" y="212" class="s" font-size="11">dp refs · labels · srcnet</text>
+    <rect class="box" x="256" y="170" width="130" height="58" rx="10"/>
+    <text x="270" y="192" class="t" font-size="14">6 Formality</text><text x="270" y="212" class="s" font-size="11">后端 ./run.sh</text>
+    <rect class="box" x="418" y="170" width="130" height="58" rx="10"/>
+    <text x="432" y="192" class="t" font-size="14">7 StarRC 三角</text><text x="432" y="212" class="s" font-size="11">dp spef</text>
+    <rect class="box" x="580" y="170" width="130" height="58" rx="10"/>
+    <text x="594" y="192" class="t" font-size="14">8 PT 三角签核</text><text x="594" y="212" class="s" font-size="11">dp pt</text>
+    <rect class="box" x="742" y="170" width="130" height="58" rx="10"/>
+    <text x="756" y="192" class="t" font-size="14">9 后仿 三角</text><text x="756" y="212" class="s" font-size="11">dp postsim wst</text>
+    <path d="M757 128 V150 H129 V166" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M224 199 H254 M386 199 H416 M548 199 H578 M710 199 H740" stroke="#475569" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- gates -->
+  <text x="34"  y="266" class="g" font-size="12">Gate: PASS checks=N</text>
+  <text x="196" y="266" class="g" font-size="12">slack MET ×2</text>
+  <text x="330" y="266" class="g" font-size="12">SUCCEEDED ×2</text>
+  <text x="470" y="266" class="g" font-size="12">DRC 0 (0) · LVS CORRECT</text>
+  <text x="680" y="266" class="g" font-size="12">三角 0 violated · 三角 PASS</text>
+</svg>

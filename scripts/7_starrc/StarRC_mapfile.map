@@ -1,0 +1,18 @@
+********************
+**MAPPILNG_FILE
+********************
+conducting_layers
+    METAL1		M1
+    METAL2		M2
+    METAL3		M3
+    METAL4		M4
+    METAL5		M5
+    METAL6      MFT
+    POLY1       POLY1
+via_layers
+    VIA12       V1
+    VIA23       V2
+    VIA34       V3
+    VIA45       V4
+    VIA56       V5
+

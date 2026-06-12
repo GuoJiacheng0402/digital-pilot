@@ -1,0 +1,31 @@
+
+#export TECHDIR=/SM01/teaching/bs/digitalic/calibre_file_gb180/tech_updated_20160618/0.18UM_BCDlite_Iso_1.8V_IC5V_6V_10V-30V/LVS-000018/018BCDlite
+export TECHDIR=//SM01/teaching/bs/digitalic/calibre_file_gb180/GF018_Technology_Files
+export baseDeckRev=Rev24
+
+export BEOL_STACK=1P6M
+export TOPMETAL=30kA
+#export MIMCAP_SELECTION=0p85fF_OPT_B
+export MIMCAP_SELECTION=2p0fF_OPT_B
+
+export POLY_HIGH_RESISTOR=2K
+export ERC_RUN=NO
+export PEX_RUN=NO
+export CONNECT_THRU_DIFF_CHECK=NO
+export WLP=NO		# [ 4_MASK_WLP | 3_MASK_WLP | NO ]
+export IGNORE_WELLDIODE_PARAM=NO
+export PROCESS=BCDlite
+
+#export INCLUDE_FILE		./sample_design_inc.cal	# PATH--LVS include file
+#export TECHDIR				         	# PATH--LVS runset, example: export TECHDIR /local/lvs_download/018BCDlite
+
+## by default, the switches below are set to NO, it is not recommended to set the switches below to YES.   
+export MOS_REDUCTION_OFF=NO			# [ YES | NO ]
+export CAP_REDUCTION_OFF=NO			# [ YES | NO ]
+export DIO_REDUCTION_OFF=NO			# [ YES | NO ]
+export BJT_REDUCTION_OFF=NO			# [ YES | NO ]
+export RES_REDUCTION_OFF=NO			# [ YES | NO ]
+
+## ---------------------------------------------------
+export CALIBRE_HOME=/SM01/eda/mentor/Calibre2021/aoj_cal_2021.3_15.9
+export PATH=$CALIBRE_HOME/pkgs/icv.aoj/bin:$PATH

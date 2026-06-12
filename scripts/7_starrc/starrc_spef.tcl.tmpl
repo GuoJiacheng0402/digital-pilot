@@ -1,0 +1,23 @@
+* DigitalPilot · StarRC 提取配置模板(__CORNER__ 角)
+* 由 run_3corner.sh 实例化:__CORNER__ → wst/typ/bst,__TEMP__ → -40/25/125
+BLOCK: __DESIGN__
+
+* Extraction
+EXTRACTION: RC
+COUPLE_TO_GROUND: YES
+REDUCTION: YES
+
+* Processing
+STAR_DIRECTORY: ./reports_spef/starrc___CORNER__
+NETLIST_FILE: ./reports_spef/__DESIGN_____CORNER__.spef
+
+* 工艺 nxtgrd + 映射(学院服务器固定路径)
+TCAD_GRD_FILE: /SM01/teaching/bs/digitalic/calibre_file_gb180/tech_updated_20160618/0.18UM_BCDlite_Iso_1.8V_IC5V_6V_10V-30V/PEX-000032/018BCDlite/PEX/StarRCXT/PEX-000032/Rev2/gf180hv30iso_1p6m_1tm_30k_sp_smim_OPTB/gf180hv30iso_1p6m_1tm_30k_sp_smim_OPTB___CORNER__.nxtgrd
+MAPPING_FILE: ./StarRC_mapfile.map
+
+* LEF/DEF
+LEF_FILE: ../4_innovus/lef/csm18ic_6lm.lef
+TOP_DEF_FILE: ../4_innovus/postlayout/__DESIGN__.def
+
+* Operating temperature
+OPERATING_TEMPERATURE: __TEMP__

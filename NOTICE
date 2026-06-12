@@ -1,0 +1,29 @@
+DigitalPilot  (digital-pilot)
+===========================
+
+面向华南理工大学微电子学院 EDA 服务器的「AI 智能体驱动的 Cadence 数字
+IC 设计全流程」开源套件。
+
+作者：GuoJiacheng（华南理工大学微电子学院）；部分代码与文档在 Claude（Anthropic） 辅助下整理和编写。
+
+本项目以 GNU GPL v3.0 发布（含 GPL-3.0 第 7(b) 条「署名保留」附加条款），许可证全文见
+根目录 LICENSE 文件。
+
+本项目是一个**独立、自主实现**的开源项目；项目自身源码、文档与工具未复制、嵌入或派生自
+任何第三方项目代码。
+
+本项目通过脚本调用学校服务器上已安装的 VCS、Design Compiler、Formality、Innovus、
+Calibre、StarRC、PrimeTime、Virtuoso 辅助工具等 EDA 软件的公开命令行接口；`scripts/`、
+`bin/dp`、`tools/`、`docs/` 与 `skills/` 均为本项目独立整理和实现。
+
+本仓库不包含、也不授权分发任何第三方或受限资产，包括但不限于：
+
+- 商业 EDA 软件或 license 文件；
+- PDK、工艺库、标准单元库、`.lib`、`.db`、LEF、GDS、SPEF、SDF 或规则 deck 原件；
+- 学校课程题目的 RTL 答案或可直接提交的作业成果。
+
+仓库中出现的 `/SM01/...` 等路径仅用于说明目标教学服务器上的既有安装位置。EDA 工具、
+PDK、规则文件与标准单元库归其各自权利人所有。
+
+如在课程设计、论文、报告或二次开发中使用 DigitalPilot，请保留作者署名并按
+ACADEMIC_USE.md / CITATION.cff 进行引用。

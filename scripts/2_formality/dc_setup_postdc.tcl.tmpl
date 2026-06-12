@@ -1,0 +1,30 @@
+# DigitalPilot · Formality 前端配置模板(__DESIGN__ 由 new_project.sh 替换)
+set DESIGN_NAME                     "__DESIGN__"
+set REPORTS_DIR                     "reports"
+file mkdir ${REPORTS_DIR}
+set RESULTS_DIR                     "../1_dc/output"
+set DCRM_SVF_OUTPUT_FILE            "__DESIGN__.svf"
+set DCRM_FINAL_VERILOG_OUTPUT_FILE  "__DESIGN__.v"
+
+
+set FMRM_UNMATCHED_POINTS_REPORT    "unmatched_points"
+set FMRM_FAILING_SESSION_NAME       "failing_session"
+set FMRM_FAILING_POINTS_REPORT      "failing_points"
+set FMRM_ABORTED_POINTS_REPORT      "aborted_points"
+set FMRM_ANALYZE_POINTS_REPORT      "analyze_points"
+
+# specify library
+set library_dir        "/SM01/teaching/bs/digitalic/gb18_dc_lib"
+
+# specify timing library
+set ADDITIONAL_LINK_LIB_FILES " \
+   ${library_dir}/scx_csm_18ic_tt_1p8v_25c.db \
+"
+
+# specify RTL directory
+set rtl_dir "../0_simulation_pre/rtl"
+
+# specify RTL
+set RTL_SOURCE_FILES " \
+${rtl_dir}/__DESIGN__.v \
+"

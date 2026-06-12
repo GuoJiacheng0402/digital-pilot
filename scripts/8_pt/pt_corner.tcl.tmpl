@@ -1,0 +1,66 @@
+# DigitalPilot · PT 单角脚本模板(run_3corner.sh 实例化 __CORNER__/__CORNER_LIB__/__DESIGN__)
+puts "RM-Info: Running script [info script]\n"
+
+source -echo -verbose tcl/setenv.tcl
+set corner "__CORNER__"
+set para_file "__CORNER__"
+
+# Provide an array of DMSA Corners Based Libraries : best_case, nom, worst_case
+set dmsa_corner_library_files(__CORNER__) " \
+__CORNER_DB__";
+
+# Provide an array DMSA Modes Constraint Files 
+set dmsa_mode_constraint_files(__CORNER__) "tcl/top.sdc";
+
+
+#
+# Corner Based Back Annotation Section
+#
+set PARASITIC_FILES(__CORNER__)	 "../7_StarRC/reports_spef/__DESIGN_____CORNER__.spef"  
+
+
+set report_default_significant_digits 6
+set link_path "* $dmsa_corner_library_files($corner)"
+
+read_verilog $NETLIST_FILES
+current_design $DESIGN_NAME
+link 
+
+##################################################################
+#    Back Annotation Section                                     #
+##################################################################
+read_parasitics -format spef $PARASITIC_FILES($para_file) 
+
+######################################
+# reading design constraints
+######################################
+source -echo $dmsa_mode_constraint_files(${corner})
+
+set_propagated_clock [all_clocks]
+update_timing -full
+# Ensure design is properly constrained
+check_timing -verbose > $REPORTS_DIR/${corner}_check_timing.report
+
+##################################################################
+#    Save_Session Section                                        #
+##################################################################
+save_session ${corner}
+
+##################################################################
+#    Report_timing Section                                       #
+##################################################################
+write_sdf -context Verilog -input_port_nets -output_port_nets -no_edge -exclude checkpins $REPORTS_DIR/${DESIGN_NAME}_${corner}.sdf
+report_constraint -all_violators -nosplit > $REPORTS_DIR/${corner}_report_constraint.report
+report_timing -slack_lesser_than 0.5 -cap -tran -max_path 100000 -nworst 10 -delay max -nosplit -input -net -sign 6 -path_type full_clock > $REPORTS_DIR/${corner}_detail_max_timing.report
+report_timing -slack_lesser_than 0.05 -cap -tran -max_path 100000 -nworst 10 -delay min -nosplit -input -net -sign 6 -path_type full_clock > $REPORTS_DIR/${corner}_detail_min_timing.report
+report_timing -slack_lesser_than 0.5 -nosplit -max_path 100000 -nworst 10 -delay max -sign 6 -path_type summary > $REPORTS_DIR/${corner}_summ_max_timing.report
+report_timing -slack_lesser_than 0.05 -nosplit -max_path 100000 -nworst 10 -delay min -sign 6 -path_type summary > $REPORTS_DIR/${corner}_summ_min_timing.report
+report_analysis_coverage > $REPORTS_DIR/${corner}_report_analysis_coverage.report 
+report_clock -skew -attribute > $REPORTS_DIR/${corner}_report_clock.report
+#report_constraint -all_violators -nosplit -max_cap > ../max_capacitance/${corner}_${para_file}_report_mcap.report
+#report_constraint -all_violators -nosplit -max_tran > ../max_transition/${corner}_${para_file}_report_mtra.report
+#report_constraint -all_violators -nosplit -min_pulse_width > ../min_pulse_width/${corner}_${para_file}_report_mmpw.report
+report_annotated_parasitics -check
+
+puts "RM-Info: Completed script [info script]\n"
+exit

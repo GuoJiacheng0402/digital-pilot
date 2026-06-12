@@ -1,0 +1,21 @@
+# DigitalPilot · Innovus MMMC 视图(实现优化用,单角 WST)
+#
+# 方法学:实现/优化阶段用单角 WST(SS,1.62V,125C = setup 最难角)驱动,
+# 省 PPA、避免无谓 hold buffer;**签核与验证必须另跑三角**(StarRC+PT+GLS,
+# 见 docs/10_three_corner.md)。BST hold 若有违例,用 eco_hold_fix.tcl 收。
+# 本视图只管 APR,不代表项目"只做 WST"。
+
+create_op_cond -name op_wst \
+    -library_file {/SM01/teaching/bs/digitalic/gb18_dc_lib/scx_csm_18ic_ss_1p62v_125c.lib} \
+    -P {10} -V {1.62} -T {125}
+
+create_library_set -name libset_wst \
+    -timing {/SM01/teaching/bs/digitalic/gb18_dc_lib/scx_csm_18ic_ss_1p62v_125c.lib}
+
+create_constraint_mode -name soc_constrain -sdc_files {../postdc/__DESIGN__.sdc}
+
+create_delay_corner -name dly_wst -library_set libset_wst
+
+create_analysis_view -name view_wst -constraint_mode soc_constrain -delay_corner dly_wst
+
+set_analysis_view -setup {view_wst} -hold {view_wst}

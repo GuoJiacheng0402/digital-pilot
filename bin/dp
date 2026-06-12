@@ -1,0 +1,59 @@
+#!/bin/bash
+# =============================================================================
+# dp —— DigitalPilot 统一命令入口(git 风格子命令)
+# 安装: echo 'export PATH=$PATH:~/DigitalPilot/bin' >> ~/.bashrc
+# =============================================================================
+DP_ROOT="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
+S=$DP_ROOT/scripts
+PY="env -u LD_LIBRARY_PATH -u PYTHONPATH -u PYTHONHOME python3"  # 同 config.sh dp_python:防 EDA 环境污染
+usage() { cat <<'U'
+dp <子命令> [参数]                  DigitalPilot 数字IC课设全流程
+  项目
+    new <目录> <设计名> [clk] [周期]   建工作区(模板全实例化)
+    status                            全链自查(在项目根目录跑)
+    pack <项目目录> <out.zip>          按 §1.7 打提交包
+  设计辅助(零依赖)
+    ports <rtl.v> [--fmt tb|json]      提取端口 → tb 声明/例化
+    lut   <gen_lut.py 参数...>         定点函数打表成 Verilog
+    gds   <子命令> <文件...>           GDS 检视(scan-missing/list-cells/top-cell/add-labels)
+  物理验证(黑盒三件套 + 运行)
+    refs   <主GDS> <ref目录>           生成标准单元参考 GDS
+    labels --gds G --def D --out O     注 VDD!/VSS! 电源标签
+    srcnet <网表.v> <out目录>          生成 LVS 源网表
+    drc    <主GDS> <ref目录> [run目录]  Calibre DRC
+    lvs    <带标签GDS> <src.net> <ref目录> [run目录]   Calibre LVS
+  签核与后仿(在对应阶段目录跑)
+    spef                               StarRC 三角提取(7_StarRC/)
+    pt                                 PT 三角签核(8_pt/)
+    postsim <wst|typ|bst>              三角后仿(9_simulation_postlayout/)
+  其他
+    doctor                             环境体检(工具/库/python)
+    help                               本帮助;各子命令裸跑可看用法
+U
+}
+case "${1:-help}" in
+  new)     shift; exec "$S/utils/new_project.sh" "$@";;
+  status)  shift; exec "$S/utils/collect_reports.sh" "$@";;
+  pack)    shift; exec "$S/utils/make_submit_package.sh" "$@";;
+  ports)   shift; exec $PY "$S/utils/list_ports.py" "$@";;
+  lut)     shift; exec $PY "$S/utils/gen_lut.py" "$@";;
+  gds)     shift; exec $PY "$S/utils/gds_tool.py" "$@";;
+  refs)    shift; exec "$S/5_drc/gen_stdcell_refs.sh" "$@";;
+  labels)  shift; exec $PY "$S/5_lvs/add_power_labels.py" "$@";;
+  srcnet)  shift; exec "$S/5_lvs/gen_src_netlist.sh" "$@";;
+  drc)     shift; exec "$S/5_drc/run_drc.sh" "$@";;
+  lvs)     shift; exec "$S/5_lvs/run_lvs.sh" "$@";;
+  spef)    shift; exec ./run_3corner.sh "$@";;
+  pt)      shift; exec ./run_3corner.sh "$@";;
+  postsim) shift; exec ./run_corner.sh "$@";;
+  doctor)
+    echo "== DigitalPilot doctor =="
+    for t in vcs dc_shell pt_shell fm_shell innovus calibre strmout verilog2oa StarXtract; do
+      printf "  %-12s %s\n" "$t" "$(command -v $t 2>/dev/null || echo '未在 PATH(需 source 对应 env,见 docs/01)')"
+    done
+    printf "  %-12s %s\n" python3 "$(env -u LD_LIBRARY_PATH -u PYTHONHOME python3 -V 2>&1)"
+    for d in /SM01/teaching/bs/digitalic/gb18_dc_lib /SM01/teaching/bs/digitalic/IC_ISO_1P6M_2K_2p0fF_B_30K; do
+      [ -d "$d" ] && echo "  库 OK  $d" || echo "  库 缺失 $d"
+    done;;
+  help|--help|-h|*) usage;;
+esac

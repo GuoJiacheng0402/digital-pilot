@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use DigitalPilot in your work, please cite it as below."
+title: "DigitalPilot: An AI-agent-driven Cadence digital IC RTL-to-GDS flow"
+abstract: >-
+  DigitalPilot is an independent open-source toolkit and knowledge base for a
+  Cadence-based digital IC course-design flow on the School of Microelectronics
+  EDA servers at South China University of Technology. It documents and
+  scripts the RTL -> simulation -> synthesis -> Formality -> Innovus APR ->
+  Calibre DRC/LVS -> StarRC extraction -> PrimeTime signoff -> post-layout
+  gate-level simulation flow, with particular attention to standard-cell
+  reference GDS generation, LVS source-netlist and power-label automation,
+  three-corner signoff, and AI-agent handoff discipline. The repository does
+  not redistribute PDK, EDA, license, rule-deck, or coursework-answer assets.
+type: software
+authors:
+  - family-names: Guo
+    given-names: Jiacheng
+    affiliation: "School of Microelectronics, South China University of Technology"
+version: "1.0.0"
+date-released: "2026-06-12"
+license: GPL-3.0-only
+repository-code: "https://github.com/GuoJiacheng0402/digital-pilot"
+url: "https://github.com/GuoJiacheng0402/digital-pilot"
+keywords:
+  - digital IC design
+  - RTL-to-GDS
+  - Cadence
+  - VCS
+  - Design Compiler
+  - Innovus
+  - Calibre
+  - StarRC
+  - PrimeTime
+  - EDA automation
+  - AI agent
